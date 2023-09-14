@@ -1,9 +1,43 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import Layout from './layout/layout'
+import { ITab } from '../types/types'
+import { useContext, useState } from 'react';
+import PostBLog from '../components/post-blog';
+import { BlogContext } from '@/store';
+import { stat } from 'fs';
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  return ( <Layout/> )
+
+	const { state, dispatch } = useContext(BlogContext);
+
+	console.log(state, dispatch,"dasdasdas")
+
+	const tabsList: ITab[] = [
+		{
+			id: 1,
+			title: "Blog Post"
+		},
+		{
+			id: 2,
+			title: "Users List"
+		}
+	]
+
+	const [selectedTab, SetSelectedTab] = useState<number>(1)
+
+	const handleSelectedTab = (id: number) => {
+		SetSelectedTab(id)
+	}
+
+	return (
+		<Layout
+			tabsList={tabsList}
+			selectedTab={selectedTab}
+			setSelectedTab={handleSelectedTab}
+		>
+			<div>
+				<PostBLog />
+			</div>
+		</Layout>
+	)
 }
