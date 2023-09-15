@@ -1,4 +1,4 @@
-import { BlogContext, BlogContextProvider } from '@/store'
+import { BlogContext, BlogContextProvider } from '@/store/post'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 

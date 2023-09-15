@@ -1,18 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import PostCard from "./post-card";
 import Pagination from "../pagination";
-import { getBlogPost } from "@/uitls/PostService";
 import { IPost, IPostResponse } from "@/types/types";
+import { BlogContext } from "@/store/post";
+import Axios from "@/uitls/Axios";
 
 const PostBLog = () => {
 
+    const { state: { post }, dispatch } = useContext(BlogContext)
+
     const containerRef = useRef<HTMLDivElement>(null)
     const [width, setWidth] = useState<number>(0)
-    const [posts, setPosts] = useState<IPostResponse>()
+
 
     useEffect(() => {
         if (!containerRef.current) return
-        console.log(containerRef.current.clientWidth / 4)
         setWidth((containerRef.current.clientWidth / 4))
     }, [])
 
@@ -20,20 +22,34 @@ const PostBLog = () => {
         getPost()
     }, [])
 
-    const getPost = async () => {
-        const response = await getBlogPost()
-        setPosts(response)
+    const getPost = async (page: number = 1, limit: number = 10) => {
+        // await getBlogPost()
+        dispatch({
+            type: "LOADING_POST"
+        })
+
+        try {
+            const response = await Axios.get<IPostResponse>(`/posts?page=${page}&per_page=${limit}`)
+            dispatch({ type: "SUCCESS_GET_POST", payload: response.data })
+        } catch (error) {
+
+        }
     }
 
     return (
         <div>
             <div ref={containerRef} className="flex flex-wrap">
-                { posts?.data.map((post: IPost) => (<PostCard key={post.id} width={width} />)) }
+                {post?.data.map((post: IPost) => (<PostCard data={post} width={width} />))}
             </div>
             <div className="p-5 mx-auto">
-                <Pagination page={posts?.meta.pagination.page} limit={posts?.meta.pagination.limit} total={posts?.meta.pagination.total} pages={posts?.meta.pagination.pages} onClickHandler={function (id: number): void {
-                    throw new Error("Function not implemented.");
-                }} />
+                <Pagination
+                    page={post.meta.page}
+                    limit={post.meta.limit}
+                    total={post.meta.total}
+                    pages={post.meta.pages}
+                    onClickHandler={function (id: number): void {
+                        getPost(id)
+                    }} />
             </div>
         </div>
 

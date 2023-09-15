@@ -1,6 +1,10 @@
 import axios from "axios";
 
-const Axios = axios.create();
+const Axios = axios.create(
+    { 
+        baseURL: "https://gorest.co.in/public/v1/"
+    }
+);
 
 Axios.interceptors.request.use(
     (config) => {
@@ -16,6 +20,7 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
     (response) => {
         // Modify the response data if needed
+        console.log(response, "response")
         return response;
     },
     (error) => {

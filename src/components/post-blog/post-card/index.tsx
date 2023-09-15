@@ -1,12 +1,18 @@
+import { IPost } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface IPostCard {
     width: number
+    data: IPost
 }
 
 const PostCard = (
-    { width }: IPostCard
+    { width, data }: IPostCard
 ) => {
+
+    const encodedData = encodeURIComponent(JSON.stringify(data))
+
     return (
         <div
             style={{ width: `${width}px` }}
@@ -17,9 +23,16 @@ const PostCard = (
                 </div>
 
                 <div className="p-5 flex flex-col gap-4 ">
-                    <h1 className="text-3xl font-bold"> Title </h1>
-                    <p className="line-clamp-6"> Aeger molestiae antepono. Bellicus libero dolore. Aequus collum minima. Amo quas utor. Sodalitas beneficium anser. Culpo nostrum totus. Illo conduco verbum. Vultuosus teres clementia. Laudantium crastinus cubitum. Aveho subito qui. Certe fuga architecto. Compono brevis denuncio. Spargo aqua et. </p>
-                    <div className="flex justify-end cursor-pointer text-lg font-medium text-blue-600"> Read More </div>
+                    <h1 className="text-3xl font-bold line-clamp-2"> {data.title} </h1>
+                    <p className="line-clamp-6"> {data.body} </p>
+
+                    <Link href={`/${data.id}`}>
+                        <div
+                            className="flex justify-end cursor-pointer text-lg font-medium text-blue-600"
+                        >
+                            Read More
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>
