@@ -20,9 +20,20 @@ const initialState: IState = {
         error: "" 
     }, 
     comments: { 
-        loading: false, 
+        loading: false,
         data: [], 
         error: "" 
+    },
+    users: { 
+        loading: false, 
+        data: [], 
+        error: "",
+        meta: {
+            total: 1,
+            pages: 1,
+            page: 1,
+            limit: 10
+        }
     }
 }
 
@@ -48,6 +59,10 @@ const reducer = (state: IState = initialState, action: ActionTypes): IState => {
             return { ...state, detailPost: { ...state.detailPost, loading: true } }
         case "SUCCESS_GET_COMMENT": 
             return { ...state, comments: { ...state.comments, loading: false, data: action.payload }}
+        case "LOADING_USERS":
+            return { ...state, detailPost: { ...state.detailPost, loading: true } }
+        case "SUCCESS_GET_USERS": 
+            return { ...state, users: { ...state.users, loading: false, data: action.payload.data, meta: action.payload.meta.pagination }}
         default:
             return state
     }

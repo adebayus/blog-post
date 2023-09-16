@@ -51,12 +51,19 @@ export interface IUser {
     status?: string
 }
 
+export interface IUserResponse {
+    data: IUser[],
+    meta: IMeta
+}
+
+
 //
 
 export interface IState {
     post: IStatePostBlog
     detailPost: IStateDetailPost
     comments: IStateComment
+    users: IStateUser
 }
 
 export interface IStateDetailPost {
@@ -66,7 +73,14 @@ export interface IStateDetailPost {
     user: IUser
 }
 
-export interface IStateComment { 
+export interface IStateUser {
+    loading: boolean,
+    error: string,
+    data: IUser[],
+    meta: IMetaPagination
+}
+
+export interface IStateComment {
     loading: boolean,
     error: string,
     data: IComment[]
@@ -74,7 +88,7 @@ export interface IStateComment {
 
 export interface IAction {
     type: string
-    
+
 }
 
 export interface IStatePostBlog {
@@ -84,12 +98,12 @@ export interface IStatePostBlog {
     error: string
 }
 
-export interface IPayloadDetailPost { 
+export interface IPayloadDetailPost {
     post: IPost,
     user: IUser
 }
 
-export interface IComment { 
+export interface IComment {
     id?: number,
     name?: string,
     email?: string,
@@ -103,3 +117,6 @@ export type ActionTypes =
     | { type: "SUCCESS_GET_DETAIL_POST", payload: IPayloadDetailPost }
     | { type: "LOADING_COMMENT" }
     | { type: "SUCCESS_GET_COMMENT", payload: IComment[] }
+    | { type: "LOADING_USERS" }
+    | { type: "SUCCESS_GET_USERS", payload: IUserResponse }
+    

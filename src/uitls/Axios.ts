@@ -2,7 +2,10 @@ import axios from "axios";
 
 const Axios = axios.create(
     { 
-        baseURL: "https://gorest.co.in/public/v1/"
+        baseURL: "https://gorest.co.in/public/v1/",
+        headers: { 
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` 
+        }
     }
 );
 

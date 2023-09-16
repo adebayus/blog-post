@@ -39,7 +39,7 @@ const PostBLog = () => {
     return (
         <div>
             <div ref={containerRef} className="flex flex-wrap">
-                {post?.data.map((post: IPost) => (<PostCard data={post} width={width} />))}
+                {post?.data.map((post: IPost, index: number) => (<PostCard key={index} data={post} width={width} />))}
             </div>
             <div className="p-5 mx-auto">
                 <Pagination
