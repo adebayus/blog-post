@@ -22,7 +22,7 @@ const Layout = ({ children, tabsList, selectedTab, setSelectedTab }: ILayout) =>
                 <h1 className="text-[48px] font-bold" > Blog Post </h1>
                 {/* container selected tab */}
                 <div className="bg-gray-300 flex max-w-[900px] w-full h-[70px] mx-auto rounded p-2 gap-2">
-                    {tabsList.map((tab: ITab) => (
+                    {tabsList?.map((tab: ITab) => (
                         <div
                             onClick={() => handleTabClick(tab.id)}
                             key={tab.id}

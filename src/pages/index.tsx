@@ -2,7 +2,6 @@ import Layout from './layout/layout'
 import { ITab } from '../types/types'
 import { useState } from 'react';
 import PostBLog from '../components/post-blog';
-import { render } from 'react-dom';
 import UserPage from '@/components/user-page';
 
 export default function Home() {
