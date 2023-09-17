@@ -12,6 +12,8 @@ const UserPage = () => {
 
     const { state: { users }, dispatch } = useContext(BlogContext)
     const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    const [isEdit, setIsEdit] = useState(false)
     const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
 
     const columns: string[] = [
@@ -74,7 +76,7 @@ const UserPage = () => {
                 ariaHideApp={false}
                 onRequestClose={closeModal}
                 >
-                <UserCreate isEdit={false} onCanceled={closeModal} user={selectedUser} />
+                <UserCreate isEdit={isEdit} onCanceled={closeModal} user={selectedUser} />
             </Modal>
             <div className="flex flex-col gap-10">
                 {/* button  */}
@@ -83,6 +85,7 @@ const UserPage = () => {
                         className="px-6 py-3 bg-green-400 w-fit rounded-md text-white font-Bold text-xl cursor-pointer"
                         onClick={() => { 
                             setSelectedUser(null)
+                            setIsEdit(false)
                             openModal()
                         }}
                     >
@@ -118,6 +121,7 @@ const UserPage = () => {
                                                 className="px-6 py-3 bg-yellow-400 w-fit rounded-md text-white font-Bold text-xl cursor-pointer"
                                                 onClick={() => {
                                                     setSelectedUser(user)
+                                                    setIsEdit(true)
                                                     openModal()
                                                 }}    
                                             >
